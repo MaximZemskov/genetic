@@ -24,6 +24,10 @@ def code(val):
         print e
 
 
+def decode(val_in_bin):
+    pass
+
+
 def integer_part_to_bin(val):
     try:
         integer_part_in_bin = bin(int(val)).split("b")[1]

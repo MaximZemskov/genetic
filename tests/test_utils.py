@@ -19,12 +19,14 @@ class TestCoder(unittest.TestCase):
 
         #######
         # test_code_func_with_positive_num
+        # test_decode_func_with_positive_num
         #######
         self.test_positive_num = 1.426
         self.test_positive_num_in_bin = "00000001.011011010000111001010110"
 
         #######
         # test_code_func_with_negative_num
+        # test_decode_func_with_negative_num
         #######
         self.test_negative_num = -1.11155
         self.test_negative_num_in_bin = "10000001.000111001000111010001010"
@@ -48,6 +50,16 @@ class TestCoder(unittest.TestCase):
         num = self.test_negative_num
         num_bin = coder.code(num)
         self.assertEquals(num_bin, self.test_negative_num_in_bin)
+
+    def test_decode_func_with_positive_num(self):
+        num_in_bin = self.test_positive_num_in_bin
+        num = coder.decode(num_in_bin)
+        self.assertEquals(num, self.test_positive_num)
+
+    def test_decode_func_with_negative_num(self):
+        num_in_bin = self.test_negative_num_in_bin
+        num = coder.decode(num_in_bin)
+        self.assertEquals(num, self.test_negative_num)
 
     def tearDown(self):
         pass
