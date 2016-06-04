@@ -9,12 +9,25 @@ def code(val):
         val_split = str(val).split(".")
         integer_part = val_split[0]
         real_part = val_split[1]
-        integer_part_in_bin = bin(int(integer_part)).split("b")[1]
+        integer_part_in_bin = integer_part_to_bin(integer_part)
+    except Exception as e:
+        print e
+
+
+def integer_part_to_bin(val):
+    try:
+        integer_part_in_bin = bin(int(val)).split("b")[1]
+        while len(integer_part_in_bin) != 7:
+            integer_part_in_bin = "0" + integer_part_in_bin
+        return integer_part_in_bin
     except Exception as e:
         print e
 
 
 def real_part_to_bin(val):
+    """
+    val must be str
+    """
     try:
         val = "0." + val
         val = float(val)
