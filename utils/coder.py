@@ -4,6 +4,8 @@ def code(val):
     required float val
     integer part must be -127 < integer_part < 127
     real part may be any
+    :returns str
+    :example ""10000001.000111001000111010001010"
     """
     try:
         val_split = str(val).split(".")
@@ -24,8 +26,31 @@ def code(val):
         print e
 
 
-def decode(val_in_bin):
+def left_part_bin_to_integer(integer_part_in_bin):
     pass
+
+
+def right_part_bin_to_integer(real_part_in_bin):
+    pass
+
+
+def decode(val_in_bin):
+    """
+    val_in_bin example "10000001.000111001000111010001010"
+    :param val_in_bin:
+    :returns float number
+    """
+    try:
+        is_positive = False
+        if val_in_bin[0] == "0":
+            is_positive = True
+        val_split = val_in_bin.split(".")
+        integer_part_in_bin = val_split[0][1:]
+        real_part_in_bin = val_split[1]
+        integer_part = left_part_bin_to_integer(integer_part_in_bin)
+        real_part = right_part_bin_to_integer(real_part_in_bin)
+    except Exception as e:
+        print e
 
 
 def integer_part_to_bin(val):
