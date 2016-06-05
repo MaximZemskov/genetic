@@ -33,7 +33,7 @@ class TestCoder(unittest.TestCase):
 
     def test_real_part_to_bin_func(self):
         real_num = self.test_real_num_in_str
-        real_num_bin = coder.real_part_to_bin(real_num)
+        real_num_bin = coder.after_point_part_to_bin(real_num)
         self.assertEquals(real_num_bin, self.test_real_num_bin)
 
     def test_integer_part_to_bin_func(self):

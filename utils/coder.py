@@ -3,14 +3,14 @@ def code(val):
     float to binary code
     required float val
     integer part must be -127 < integer_part < 127
-    real part may be any
+    after point part may be any
     :returns str
     :example ""10000001.000111001000111010001010"
     """
     try:
         val_split = str(val).split(".")
         integer_part = val_split[0]
-        real_part = val_split[1]
+        after_point_part = val_split[1]
         val_in_bin = ""
         if val < 0:
             val_in_bin += "1"
@@ -19,8 +19,8 @@ def code(val):
         if integer_part[0] == "-":
             integer_part = integer_part.split("-")[1]
         integer_part_in_bin = integer_part_to_bin(integer_part)
-        real_part_in_bin = real_part_to_bin(real_part)
-        val_in_bin += integer_part_in_bin + "." + real_part_in_bin
+        after_point_part_in_bin = after_point_part_to_bin(after_point_part)
+        val_in_bin += integer_part_in_bin + "." + after_point_part_in_bin
         return val_in_bin
     except Exception as e:
         print e
@@ -38,13 +38,13 @@ def decode(val_in_bin):
             is_positive = True
         val_split = val_in_bin.split(".")
         integer_part_in_bin = val_split[0][1:]
-        real_part_in_bin = val_split[1]
+        after_point_part_in_bin = val_split[1]
         x = 0 if len(integer_part_in_bin) == 0 else int(integer_part_in_bin, 2)
-        y = 0 if len(real_part_in_bin) == 0 else int(real_part_in_bin, 2)
+        y = 0 if len(after_point_part_in_bin) == 0 else int(after_point_part_in_bin, 2)
         if is_positive:
-            return x + float(y) / 2 ** len(real_part_in_bin)
+            return x + float(y) / 2 ** len(after_point_part_in_bin)
         else:
-            return -(x + float(y) / 2 ** len(real_part_in_bin))
+            return -(x + float(y) / 2 ** len(after_point_part_in_bin))
     except Exception as e:
         print e
 
@@ -59,7 +59,7 @@ def integer_part_to_bin(val):
         print e
 
 
-def real_part_to_bin(val):
+def after_point_part_to_bin(val):
     """
     val must be str
     """
