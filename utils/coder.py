@@ -26,14 +26,6 @@ def code(val):
         print e
 
 
-def left_part_bin_to_integer(integer_part_in_bin):
-    pass
-
-
-def right_part_bin_to_integer(real_part_in_bin):
-    pass
-
-
 def decode(val_in_bin):
     """
     val_in_bin example "10000001.000111001000111010001010"
@@ -47,8 +39,12 @@ def decode(val_in_bin):
         val_split = val_in_bin.split(".")
         integer_part_in_bin = val_split[0][1:]
         real_part_in_bin = val_split[1]
-        integer_part = left_part_bin_to_integer(integer_part_in_bin)
-        real_part = right_part_bin_to_integer(real_part_in_bin)
+        x = 0 if len(integer_part_in_bin) == 0 else int(integer_part_in_bin, 2)
+        y = 0 if len(real_part_in_bin) == 0 else int(real_part_in_bin, 2)
+        if is_positive:
+            return x + float(y) / 2 ** len(real_part_in_bin)
+        else:
+            return -(x + float(y) / 2 ** len(real_part_in_bin))
     except Exception as e:
         print e
 

@@ -21,14 +21,14 @@ class TestCoder(unittest.TestCase):
         # test_code_func_with_positive_num
         # test_decode_func_with_positive_num
         #######
-        self.test_positive_num = 1.426
+        self.test_positive_num = 1.4259999990463257
         self.test_positive_num_in_bin = "00000001.011011010000111001010110"
 
         #######
         # test_code_func_with_negative_num
         # test_decode_func_with_negative_num
         #######
-        self.test_negative_num = -1.11155
+        self.test_negative_num = -1.111549973487854
         self.test_negative_num_in_bin = "10000001.000111001000111010001010"
 
     def test_real_part_to_bin_func(self):
