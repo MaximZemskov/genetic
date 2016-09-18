@@ -41,6 +41,14 @@ def breed():
     pass
 
 
+def selection(population):
+    """
+    создание родительского пулла
+    :return:
+    """
+    parrent_pool = []
+
+
 def mutation(chrom):
     """
     мутация.
