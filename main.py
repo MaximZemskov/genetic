@@ -1,14 +1,13 @@
 # coding=utf-8
 
 import random
+import sys
 import time
 
 from utils import coder
 from individ import Individ
 
 MAX_POP = 20
-
-population = []
 
 
 def generate_individ(n):
@@ -26,111 +25,72 @@ def generate_initial_population(N, n):
     N - размер популяции
     n - количество хромосом
     """
+    population = []
+
     for i in xrange(N):
         population.append(generate_individ(n))
 
     return population
 
 
-# def create_fitness(self):
-#     for i in range(0, self.MAX_POP):
-#         fitness = self.fitness_count()
-#         if fitness == 0:
-#             return i
-#     return 0
-
-def create_fitness():
-    for i in range(0, MAX_POP):
-        fitness = population[i].fitness_count()
-        if fitness == 0:
-            return i
-    return 0
-
-# float CDiophantine::MultInv() {
-# 	float sum = 0;
-#
-# 	for(int i=0;i<MAXPOP;i++) {
-# 		sum += 1/((float)population[i].fitness);
-# 	}
-#
-# 	return sum;
-# }
-
-def mult_inv():
-    summa = 0
-
-    for i in range(0, MAX_POP):
-        summa += 1.0 / population[i].fitness
-
-    return summa
-
-#
-# void CDiophantine::GenerateLikelihoods() {
-# 	float multinv = MultInv();
-#
-# 	float last = 0;
-# 	for(int i=0;i<MAXPOP;i++) {
-# 		population[i].likelihood = last = last + ((1/((float)population[i].fitness) / multinv) * 100);
-# 	}
-# }
+def breed():
+    """
+    скрещивание
+    :return:
+    """
+    pass
 
 
-def generate_like_li_hoods():
-    multinv = mult_inv()
+def mutation(chrom):
+    """
+    мутация.
+    С вероятностью 10 процентов заменяет значение аллели на противоположное
+    :param chrom:
+    :return:
+    """
+    chance = 0.1  # шанс мутации
+    chrom = list(chrom)
+    for i in xrange(len(chrom)):
+        if random.random() < chance:
+            if chrom[i] == '1':
+                chrom[i] = '0'
+            elif chrom[i] == '0':
+                chrom[i] = '1'
+    chrom = ''.join(chrom)
+    return chrom
 
-    last = 0
-    for i in range(0, MAX_POP):
-        population[i].likelihoods = last = last + ((1.0 / population[i].fitness) / multinv) * 100
 
+def crossover(parent_a, parent_b, separator=None):
+    """
+    скрещивание методом кроссовера
+    сепаратор можно передать как аргумент или он автоматически определится во время работы функции
+    :param parent_a:
+    :param parent_b:
+    :param separator:
+    :return:
+    """
+    n = 4  # количество хромосом в особи
 
+    if not separator:
+        separator = random.randint(1, n - 1)  # точка разделения для скрещивания
 
-def get_index(val):
-    last = 0
-    for i in range(0, MAX_POP):
-        if (last <= val) and (val <= population[i].likelihood):
-            return i
-        else:
-            last = population[i].likelihood
-    return 4
+    child = parent_a[:separator] + parent_b[separator:]
+    return child
+
 
 def main():
     N = 20  # размер начальной популяции
     n = 4  # количество особей
 
-    fitness = -1
-    # population = generate_initial_population(N, n)
-    #
-    # # for pop in population:
-    # #     print pop
-    #
-    # print population
+    population = generate_initial_population(N, n)
 
-    # generate initial population
+    for pop in population:
+        print pop
 
-    for i in xrange(N):
-        individ = Individ(N)
-        new_individ = generate_individ(n)
-        for i in xrange(n):
-            individ.alleles[i] = new_individ[i]
-        population.append(individ)
-
-    # оцениваем приспособленность
-
-    fitness = create_fitness()
-
-    if not fitness:
-        print "Solution found"
-        print fitness
-    else:
-        iterations = 0
-        while (iterations != 1000) or (fitness != 0):
-
-
-
-    # for pop in population:
-    #     print pop.alleles[0]
-    #
-    # print population[10].fitness
+    for pop in population:
+        for i in xrange(len(pop)):
+            sys.stdout.write(str(coder.decode(pop[i])) + ", ")
+        print ""
 
 
 if __name__ == '__main__':
