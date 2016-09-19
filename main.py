@@ -10,14 +10,14 @@ from individ import Individ
 MAX_POP = 20
 
 
-def generate_individ(n):
-    """
-    Генерирует особь
-    """
-    individ = []
-    for j in xrange(n):
-        individ.append(coder.code(random.uniform(-10, 10)))
-    return individ
+# def generate_individ(n):
+#     """
+#     Генерирует особь
+#     """
+#     individ = Individ()
+#     for j in xrange(n):
+#         individ.append(coder.code(random.uniform(-10, 10)))
+#     return individ
 
 
 def generate_initial_population(N, n):
@@ -28,7 +28,9 @@ def generate_initial_population(N, n):
     population = []
 
     for i in xrange(N):
-        population.append(generate_individ(n))
+        individ = Individ(N)
+        individ.generate_individ(n)
+        population.append(individ)
 
     return population
 
@@ -46,7 +48,18 @@ def selection(population):
     создание родительского пулла
     :return:
     """
-    parrent_pool = []
+    parent_pool = []
+
+    i = 0
+    while len(parent_pool) != MAX_POP:
+        if i == MAX_POP - 1:
+            i = 0
+        chance = random.random()
+        if chance < population[i].fitness:
+            parent_pool.append(population[i])
+        i += 1
+
+    return parent_pool
 
 
 def mutation(chrom):
@@ -82,23 +95,24 @@ def crossover(parent_a, parent_b, separator=None):
     if not separator:
         separator = random.randint(1, n - 1)  # точка разделения для скрещивания
 
-    child = parent_a[:separator] + parent_b[separator:]
-    return child
+    child_1 = parent_a[:separator] + parent_b[separator:]
+    child_2 = parent_b[:separator] + parent_a[separator:]
+    return child_1, child_2
 
 
 def main():
-    N = 20  # размер начальной популяции
+    N = MAX_POP  # размер начальной популяции
     n = 4  # количество особей
 
     population = generate_initial_population(N, n)
 
     for pop in population:
-        print pop
+        print pop.alleles
 
-    for pop in population:
-        for i in xrange(len(pop)):
-            sys.stdout.write(str(coder.decode(pop[i])) + ", ")
-        print ""
+    print ""
+    parent_pool = selection(population)
+    for pop in parent_pool:
+        print pop.alleles
 
 
 if __name__ == '__main__':
