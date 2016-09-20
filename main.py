@@ -48,15 +48,37 @@ def selection(population):
     создание родительского пулла
     :return:
     """
+
+    glob_fitness = 0
+
+    for pop in population:
+        glob_fitness += pop.fitness
+
+    border = []
+
+    # формируем рулетку
+
+    for i in xrange(MAX_POP):
+        if i == 0:
+            border.append(population[i].fitness / glob_fitness * 100)
+        else:
+            border.append(border[i - 1] + population[i].fitness / glob_fitness * 100)
+
     parent_pool = []
 
     i = 0
+
     while len(parent_pool) != MAX_POP:
         if i == MAX_POP - 1:
             i = 0
-        chance = random.random()
-        if chance < population[i].fitness:
-            parent_pool.append(population[i])
+
+        chance = random.uniform(0, 100)
+
+        for j in xrange(MAX_POP):
+            if border[j] >= chance:
+                parent_pool.append(population[j])
+                break
+
         i += 1
 
     return parent_pool
