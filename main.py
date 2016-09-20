@@ -66,20 +66,13 @@ def selection(population):
 
     parent_pool = []
 
-    i = 0
-
     while len(parent_pool) != MAX_POP:
-        if i == MAX_POP - 1:
-            i = 0
-
         chance = random.uniform(0, 100)
 
         for j in xrange(MAX_POP):
             if border[j] >= chance:
                 parent_pool.append(population[j])
                 break
-
-        i += 1
 
     return parent_pool
 
@@ -91,7 +84,8 @@ def mutation(chrom):
     :param chrom:
     :return:
     """
-    chance = 0.1  # шанс мутации
+    chance = 0.1 / 34  # шанс мутации каждой клетки
+
     chrom = list(chrom)
     for i in xrange(len(chrom)):
         if random.random() < chance:
